@@ -1,0 +1,7 @@
+# .gitignore
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+*.tfvars
+hello-world.txt
