@@ -8,10 +8,12 @@ An AWS S3 bucket using the `hashicorp/aws` provider (~> 5.0) with:
 - Environment tags for resource management
 
 ## Architecture
+```text
 Terraform → AWS Provider → S3 Bucket
 ├── Public Access Block
 ├── Versioning Config
 └── Object (hello-terraform.txt)
+```
 
 ## Key concepts covered
 - `required_providers` block with `source` and `version`
