@@ -1,4 +1,4 @@
-# Lab 05 — Dynamic Blocks & Provisioners
+# Lab 07 — Dynamic Blocks & Provisioners
 
 > **HashiCorp Certified: Terraform Associate 003** | Week 2 · Day 8
 
@@ -27,7 +27,7 @@ VPC (10.0.0.0/16)
 ## Folder Structure
 
 ```
-lab-05-dynamic-blocks/
+lab-07-dynamic-blocks/
 ├── main.tf          ← VPC + Security Group with dynamic ingress block
 ├── variables.tf     ← sg_ingress_rules as list(object(...))
 ├── outputs.tf       ← Security Group ID and ingress rule count
@@ -353,7 +353,7 @@ resource "null_resource" "run_script" {
 ## CLI Commands
 
 ```bash
-cd lab-05-dynamic-blocks
+cd lab-07-dynamic-blocks
 
 # Initialize
 terraform init
@@ -414,7 +414,7 @@ aws_vpc.lab
 - [ ] Know that provisioner failure **taints** the resource by default (`on_failure = fail`)
 - [ ] Know `when = destroy` and `on_failure = continue / fail`
 - [ ] Know `null_resource` / `terraform_data` as provisioner-only resources
-- [ ] Lab committed and pushed to `lab-05-dynamic-blocks/` on GitHub
+- [ ] Lab committed and pushed to `lab-07-dynamic-blocks/` on GitHub
 
 ---
 
@@ -433,8 +433,8 @@ aws_vpc.lab
 ## Git Commit
 
 ```bash
-git add lab-05-dynamic-blocks/
-git commit -m "feat: lab-05 dynamic blocks + provisioners - Day 8"
+git add lab-07-dynamic-blocks/
+git commit -m "feat: lab-07 dynamic blocks + provisioners - Day 8"
 git push origin main
 ```
 
