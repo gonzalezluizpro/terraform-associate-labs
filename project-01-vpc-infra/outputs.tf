@@ -1,3 +1,3 @@
 output "web_url" {
-  value = "http://\"
+  value = "http://${aws_instance.web.public_ip}"
 }
