@@ -1,4 +1,7 @@
 # 🚀 Terraform Associate Labs
+[![HCP Terraform](https://img.shields.io/badge/HCP%20Terraform-Connected-7B42BC?logo=terraform)](https://app.terraform.io)
+[![AWS](https://img.shields.io/badge/AWS-Provisioned-FF9900?logo=amazonaws)](https://aws.amazon.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 > 2-week study plan + hands-on labs for **HashiCorp Certified: Terraform Associate (003)**
 
