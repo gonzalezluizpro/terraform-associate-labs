@@ -3,7 +3,7 @@ resource "aws_vpc" "this" {
   enable_dns_hostnames = true
 
   tags = {
-    Name      = "\-vpc"
+    Name      = "${var.project_name}-vpc"
     ManagedBy = "Terraform"
   }
 }
@@ -15,7 +15,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "\-public-subnet"
+    Name = "${var.project_name}-public-subnet"
   }
 }
 
@@ -23,7 +23,7 @@ resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
 
   tags = {
-    Name = "\-igw"
+    Name = "${var.project_name}-igw"
   }
 }
 
@@ -36,7 +36,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "\-public-rt"
+    Name = "${var.project_name}-public-rt"
   }
 }
 
