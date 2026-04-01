@@ -39,12 +39,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region:            eu-west-1
 
-      # 4. terraform init
+      # 4. Setup Terraform Token
+      - name: Setup Terraform Token
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.0"
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      # 5. terraform init
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: terraform init
 
-      # 5. Check formatting — fails the PR if .tf files are not formatted
+      # 6. Check formatting — fails the PR if .tf files are not formatted
       - name: Terraform Format Check
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: terraform fmt -check -recursive
