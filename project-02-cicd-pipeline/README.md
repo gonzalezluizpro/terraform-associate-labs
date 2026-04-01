@@ -45,16 +45,17 @@ Infrastructure deployed ✅
 
 ## Folder Structure
 ```text
-project-02-cicd-pipeline/
+terraform-associate-labs/
 ├── .github/
-│ └── workflows/
-│ ├── terraform-plan.yml ← triggers on PR
-│ └── terraform-apply.yml ← triggers on merge to main
-├── main.tf
-├── variables.tf
-├── outputs.tf
-├── backend.tf
-└── README.md
+│   └── workflows/
+│       ├── terraform-plan.yml
+│       └── terraform-apply.yml
+└── project-02-cicd-pipeline/
+    ├── main.tf
+    ├── variables.tf
+    ├── outputs.tf
+    ├── backend.tf
+    └── README.md
 
 ```
 
@@ -68,8 +69,27 @@ Go to: **Settings → Secrets and variables → Actions → New repository secre
 |---|---|
 | `AWS_ACCESS_KEY_ID` | AWS IAM access key |
 | `AWS_SECRET_ACCESS_KEY` | AWS IAM secret key |
+| `TF_API_TOKEN` | HCP Terraform API token — required for remote backend auth |
 
 > Never hardcode credentials — always use `${{ secrets.NAME }}` in workflows.
+
+---
+
+## HCP Terraform Workspace Variables
+
+The plan runs **remotely on HCP Terraform workers** — AWS credentials must
+also be configured inside the workspace, not just as GitHub Secrets.
+
+Go to: `app.terraform.io` → Organization → Workspace `project-02-cicd-pipeline`
+→ **Variables → + Add variable**
+
+| Variable | Type | Sensitive |
+|---|---|---|
+| `AWS_ACCESS_KEY_ID` | Environment Variable | ✅ Yes |
+| `AWS_SECRET_ACCESS_KEY` | Environment Variable | ✅ Yes |
+
+> ⚠️ Must be **Environment Variable** type — not Terraform Variable.
+> The AWS provider reads environment variables, not tfvars.
 
 ---
 
@@ -79,6 +99,41 @@ Go to: **Settings → Secrets and variables → Actions → New repository secre
 |---|---|---|
 | `terraform-plan.yml` | PR targeting `main` | Runs plan, posts PR comment |
 | `terraform-apply.yml` | Push to `main` (merge) | Runs apply automatically |
+
+## ⚠️ Workflow File Location (Important)
+
+GitHub Actions **only recognizes workflows in `.github/workflows/` at the
+repository root** — not inside project subfolders.
+
+Use `paths:` filter in the workflow to scope it to the project folder:
+```yaml
+on:
+  pull_request:
+    paths:
+      - "project-02-cicd-pipeline/**"
+```
+
+---
+
+## Terraform Destroy
+
+Destroy is always run **locally** — never automated in CI/CD pipelines.
+
+```bash
+cd project-02-cicd-pipeline
+
+terraform plan -destroy    # preview what will be deleted
+terraform destroy          # type: yes to confirm
+```
+
+Verify destruction:
+```bash
+aws s3 ls | findstr "tf-cicd-demo"
+# no output = bucket deleted ✅
+```
+
+> **Rule:** `terraform apply` can be automated. `terraform destroy` never should be.
+> Destroying infrastructure must always require explicit human approval.
 
 ---
 
@@ -129,15 +184,20 @@ git push origin feat/test-pipeline
 
 ## Day 11 Checklist
 
-- [ ] `.github/workflows/terraform-plan.yml` triggers on PR to main
-- [ ] `.github/workflows/terraform-apply.yml` triggers on push to main
-- [ ] `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` added as GitHub Secrets
-- [ ] Plan output posts as a PR comment automatically
-- [ ] `terraform fmt -check` fails the PR if code is not formatted
-- [ ] `terraform apply -auto-approve` runs on merge without manual input
-- [ ] Remote state configured (HCP Terraform or S3 backend)
-- [ ] Feature branch PR tested end-to-end
-- [ ] Project committed and pushed to `project-02-cicd-pipeline/`
+- [x] `.github/workflows/` at repo root (not inside project subfolder)
+- [x] `terraform-plan.yml` triggers on PR to main
+- [x] `terraform-apply.yml` triggers on push to main
+- [x] `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` added as GitHub Secrets
+- [x] `TF_API_TOKEN` added as GitHub Secret for HCP Terraform auth
+- [x] AWS credentials added as Environment Variables in HCP Terraform workspace
+- [x] `variables.tf` and `outputs.tf` fully declared
+- [x] Plan output posts as a PR comment automatically
+- [x] `terraform fmt -check` fails the PR if code is not formatted
+- [x] `terraform apply -auto-approve` runs on merge without manual input
+- [x] HCP Terraform remote state configured
+- [x] Feature branch PR tested end-to-end ✅
+- [x] `aws s3 ls` confirmed bucket created via pipeline ✅
+- [x] `terraform destroy` completed locally ✅
 
 ---
 
@@ -145,7 +205,7 @@ git push origin feat/test-pipeline
 
 ```bash
 git add project-02-cicd-pipeline/
-git commit -m "feat: project-02 GitHub Actions CI/CD pipeline - plan on PR, apply on merge"
+git commit -m "docs: update project-02 README with real implementation learnings"
 git push origin main
 ```
 
