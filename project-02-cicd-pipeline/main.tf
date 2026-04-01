@@ -26,7 +26,7 @@ resource "aws_s3_bucket" "cicd_demo" {
     Environment = var.environment
     ManagedBy   = "Terraform-CICD"
     Pipeline    = "GitHub-Actions"
-    Tested      = "true"
+    Tested      = "Successfully"
   }
 }
 
