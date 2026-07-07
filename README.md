@@ -193,6 +193,20 @@ terraform apply
 
 ---
 
+# 🏆 Portfolio Value
+This repository showcases:
+
+✅ Strong Terraform fundamentals  
+✅ Real-world AWS infrastructure  
+✅ Modular and reusable code  
+✅ Remote state + locking  
+✅ CI/CD integration with GitHub Actions  
+✅ Production-ready practices  
+
+Ideal for roles: Cloud Engineer • DevOps Engineer • Platform Engineer
+
+---
+
 # 🧠 Key Learnings
 
 * Infrastructure as Code (IaC) in practice
@@ -204,24 +218,6 @@ terraform apply
 
 ---
 
-# 🏆 Portfolio Value
-
-This repository demonstrates:
-
-✅ Terraform fundamentals
-✅ Real AWS infrastructure deployment
-✅ Modular architecture
-✅ CI/CD pipeline integration
-✅ Production-ready practices
-
-💡 Designed to showcase skills for:
-
-* Cloud Engineer
-* DevOps Engineer
-* Platform Engineer
-
----
-
 # 📚 Resources
 
 * [https://developer.hashicorp.com/terraform/tutorials](https://developer.hashicorp.com/terraform/tutorials)
@@ -229,3 +225,7 @@ This repository demonstrates:
 * [https://codingnconcepts.com/post/terraform-associate-exam-questions/](https://codingnconcepts.com/post/terraform-associate-exam-questions/)
 
 ---
+Author: Luiz Assef  
+💻 [Cloud-Portfolio](https://github.com/gonzalezluizpro/Cloud-Portfolio)  
+📍 Luxembourg  
+💼 [LinkedIn](https://www.linkedin.com/in/luizgonzalezpro/)
